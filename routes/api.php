@@ -28,6 +28,8 @@ Route::prefix('v1')->group(function () {
     Route::post('/register-confirm', [UserController::class, 'registerConfirm']);
     Route::post('/login',       [UserController::class, 'loginUser']);
     Route::post('/verify',      [UserController::class, 'verify']);
+    Route::post('/logout',      [UserController::class, 'logout']);         //do it
+
 
     Route::get('/cities',       [CityController::class, 'getCity']);
     Route::get('/cars',         [CarController::class, 'getCar']);
@@ -40,5 +42,10 @@ Route::prefix('v1')->group(function () {
         Route::post('order/points', [OrderController::class, 'getPoint']);
         Route::post('order/point/products', [OrderController::class, 'getProduct']);
         Route::post('order/point/product/finish', [OrderController::class, 'pointFinish']);
+
+        // last updates from 26.01
+        Route::post('order/history', [OrderController::class, 'historyOrder']);
+        Route::get('profile/documents', [UserController::class, 'getDocument']);
+
     });
 });

@@ -99,7 +99,7 @@ class UserController extends Controller
             ]);
 
             $userDocument = UserDocument::create([
-                'user_id'   =>  $user['id'],
+                'user_id'       =>  $user['id'],
                 'doc_number'    =>  $request['doc_number'],
                 'deadline'      =>  Carbon::createFromFormat('Y-m-d', $request['deadline']),
                 'image_1'       =>  $request['image_1'],
@@ -108,8 +108,8 @@ class UserController extends Controller
             ]);
 
             $userTransport = Transport::create([
-                'car_id'    =>  $request['car_id'],
-                'user_id'   =>  $user['id'],
+                'car_id'        =>  $request['car_id'],
+                'user_id'       =>  $user['id'],
                 'car_date'      =>  Carbon::createFromFormat('Y-m-d', $request['car_date']),
                 'dimensions'    =>  $request['dimensions'],
                 'number'        =>  $request['number'],
@@ -128,5 +128,12 @@ class UserController extends Controller
         $user = $request->get('user');
 
         return self::response(200, new UserResource($user), 'Success');
+    }
+
+    public function getDocument(Request $request)
+    {
+        $user = $request->get('user');
+
+        return self::response(200, new UserResource($user), 'Success!');
     }
 }

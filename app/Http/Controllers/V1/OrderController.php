@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\HistoryOrderRequest;
 use App\Http\Requests\PointFinishRequest;
 use App\Http\Resources\OrderPointResource;
 use App\Http\Resources\OrderResource;
@@ -77,5 +78,16 @@ class OrderController extends Controller
         }
 
         return self::response(400, null, 'Wrong code');
+    }
+
+    public function historyOrder(HistoryOrderRequest $request)
+    {
+        $user = $request->get('user');
+        $orders = OrderStatus::whereUserId($user['id'])->get();
+        if (isset($request['start_date']) && isset($request['end_date'])) {
+            $orders->where('created_at', '<', $request['start_date'])->where('created_at', '>', $request['end_date']);
+        }
+
+        return self::response(200, OrderStatusResource::collection($orders), 'good');
     }
 }
