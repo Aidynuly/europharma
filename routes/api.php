@@ -46,6 +46,5 @@ Route::prefix('v1')->group(function () {
         // last updates from 26.01
         Route::post('order/history', [OrderController::class, 'historyOrder']);
         Route::get('profile/documents', [UserController::class, 'getDocument']);
-
     });
 });

@@ -25,5 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PointSeeder::class);        // 250 points
         $this->call(ProductSeeder::class);
         $this->call(OrderStatusSeeder::class);
+        $this->call(ScheduleSeeder::class);
+        $this->call(UserScheduleSeeder::class);
     }
 }
