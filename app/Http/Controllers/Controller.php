@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
+use Storage;
 
 class Controller extends BaseController
 {
@@ -25,5 +26,12 @@ class Controller extends BaseController
     protected static function getDefaultMessage(int $statusCode)
     {
         return trans("http-messages.$statusCode");
+    }
+
+    protected function uploadImage($item)
+    {
+        Storage::put('public/images', $item);
+
+        return 'public/images/' . $item->getClientOriginalName();
     }
 }

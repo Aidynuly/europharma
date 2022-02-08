@@ -13,67 +13,31 @@
                                      alt="User profile picture">
                             </div>
 
-                            <h3 class="profile-username text-center">{{$user['name']}} {{$user['surname']}}</h3>
+                            <h3 class="profile-username text-center">{{$employee['name']}} {{$employee['surname']}}</h3>
 
-                            <p class="text-muted text-center">{{\App\Models\City::whereId($user['city_id'])->value('name')}}</p>
+                            <p class="text-muted text-center">{{\App\Models\City::whereId($employee['city_id'])->value('name')}}</p>
 
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
-                                    <b>Завершенные заказы:</b> <a class="float-right">{{$finished}}</a>
+                                    <b>Количество заказов:</b> <a class="float-right">{{$orders}}</a>
                                 </li>
-                                <li class="list-group-item">
-                                    <b>Принятые заказы:</b> <a class="float-right">{{$accepted}}</a>
-                                </li>
+{{--                                <li class="list-group-item">--}}
+{{--                                    <b>Принятые заказы:</b> <a class="float-right">{{$accepted}}</a>--}}
+{{--                                </li>--}}
                             </ul>
 
-{{--                            <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>--}}
+                            {{--                            <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>--}}
                         </div>
                     </div>
                     <!-- /.card -->
 
                     <!-- About Me Box -->
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">Про меня</h3>
-                        </div>
-                        <div class="card-body">
-                            <strong><i class="fas fa-book mr-1"></i>День рождения</strong>
-
-                            <p class="text-muted">
-                                {{$user['date']}}
-                            </p>
-
-                            <hr>
-
-                            <strong><i class="fas fa-map-marker-alt mr-1"></i> Локация</strong>
-
-                            <p class="text-muted">Malibu, California</p>
-
-                            <hr>
-
-{{--                            <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>--}}
-
-{{--                            <p class="text-muted">--}}
-{{--                                <span class="tag tag-danger">UI Design</span>--}}
-{{--                                <span class="tag tag-success">Coding</span>--}}
-{{--                                <span class="tag tag-info">Javascript</span>--}}
-{{--                                <span class="tag tag-warning">PHP</span>--}}
-{{--                                <span class="tag tag-primary">Node.js</span>--}}
-{{--                            </p>--}}
-
-                            <hr>
-
-                            <strong><i class="far fa-file-alt mr-1"></i> ИИН</strong>
-                            <p class="text-muted">{{$user['iin']}}</p>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-md-9">
                     <div class="card">
                         <div class="card-header p-2">
                             <ul class="nav nav-pills">
                                 <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Заказы</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Данные</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Изменить</a></li>
                             </ul>
                         </div><!-- /.card-header -->
@@ -175,128 +139,26 @@
                                     </div>
                                 </div>
 
-                                <div class="tab-pane" id="timeline">
-                                    <div>
-                                        <div class="post">
-                                            <span class="username">
-                                                <a href="#">Номер документа</a>
-                                            </span>
-                                            <span class="description">
-                                                <p>
-                                                    {{$document['doc_number'] ?? 'Пусто'}}
-                                                </p>
-                                            </span>
-                                            <span class="username">
-                                                <a href="#">Срок документа</a>
-                                            </span>
-                                            <span class="description">
-                                                <p>
-                                                    {{$document['deadline'] ?? 'Пусто'}}
-                                                </p>
-                                            </span>
-                                            <span class="username">
-                                                <a href="#">Первая фотография</a>
-                                            </span>
-                                            <span class="description">
-                                                <p>
-                                                    {{$document['image_1'] ?? 'Пусто'}}
-                                                </p>
-                                            </span>
-                                            <span class="username">
-                                                <a href="#">Вторая фотография</a>
-                                            </span>
-                                            <span class="description">
-                                                <p>
-                                                    {{$document['image_2'] ?? 'Пусто'}}
-                                                </p>
-                                            </span>
-                                            <span class="username">
-                                                <a href="#">Фотография пользователя</a>
-                                            </span>
-                                            <span class="description">
-                                                <p>
-                                                    {{$document['person_image'] ?? 'Пусто'}}
-                                                </p>
-                                            </span>
-
-                                            <hr>
-
-                                            <span class="username">
-                                                <a href="#">Название</a>
-                                            </span>
-                                            <span class="description">
-                                                <p>
-                                                    @if(isset($transport['car_id']))
-                                                        {{\App\Models\Car::whereId($transport['car_id'])->value('name')}}
-                                                    @else
-                                                        Пусто
-                                                    @endif
-                                                </p>
-                                            </span>
-
-                                            <span class="username">
-                                                <a href="#">Год транспорта</a>
-                                            </span>
-                                            <span class="description">
-                                                <p>
-                                                    {{$transport['car_date'] ?? 'Пусто'}}
-                                                </p>
-                                            </span>
-                                            <span class="username">
-                                                <a href="#">Габариты</a>
-                                            </span>
-                                            <span class="description">
-                                                <p>
-                                                    {{$transport['dimensions'] ?? 'Пусто'}}
-                                                </p>
-                                            </span>
-                                            <span class="username">
-                                                <a href="#">Номер транспорта</a>
-                                            </span>
-                                            <span class="description">
-                                                <p>
-                                                    {{$transport['number'] ?? 'Пусто'}}
-                                                </p>
-                                            </span>
-                                            <span class="username">
-                                                <a href="#">Фотография транспорта</a>
-                                            </span>
-                                            <span class="description">
-                                                <p>
-                                                    {{$transport['image'] ?? 'Пусто'}}
-                                                </p>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-
                                 <div class="tab-pane" id="settings">
-                                    <form class="form-horizontal" action="{{route('users.update', $user['id'])}}" method="post">
+                                    <form class="form-horizontal" action="{{route('employees.update', $employee['id'])}}" method="post">
                                         @method('PUT')
                                         @csrf
                                         <div class="form-group row">
                                             <label for="inputName" class="col-sm-2 col-form-label">Имя</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="inputName" placeholder="Name" value="{{$user['name']}}">
+                                                <input type="text" class="form-control" name="inputName" placeholder="Name" value="{{$employee['name']}}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="inputEmail" class="col-sm-2 col-form-label">Фамилия</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="inputSurname" placeholder="Surname" value="{{$user['surname']}}">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputName2" class="col-sm-2 col-form-label">ИИН</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="inputIIN" placeholder="IIN" value="{{$user['iin']}}">
+                                                <input type="text" class="form-control" name="inputSurname" placeholder="Surname" value="{{$employee['surname']}}">
                                             </div>
                                         </div>
                                         <div class="form-group row">
                                             <label for="inputExperience" class="col-sm-2 col-form-label">Номер</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="inputPhone" placeholder="Phone" value="{{$user['phone']}}">
+                                                <input type="text" class="form-control" name="inputPhone" placeholder="Phone" value="{{$employee['phone']}}">
                                             </div>
                                         </div>
                                         <div class="form-group row">

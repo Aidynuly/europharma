@@ -12,7 +12,7 @@
 </div>
 
 <li class="nav-item">
-    <a href="" class="nav-link active">
+    <a href="{{route('admin.main')}}" class="nav-link active">
         <i class="nav-icon fas fa-home"></i>
         <p>Главная страница</p>
     </a>
@@ -23,7 +23,7 @@
     </a>
 
     <a href="{{route('employees.index')}}" class="nav-link active">
-        <i class="nav-icon fas fa-users"></i>
+        <i class="nav-icon fas fa-people-carry"></i>
         <p>Водители</p>
     </a>
 

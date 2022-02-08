@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * App\Models\User
@@ -47,12 +49,24 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class User extends Model
+class User extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, HasApiTokens, Notifiable;
 
     protected $fillable = [
-        'city_id', 'phone', 'password', 'name', 'surname', 'date', 'avatar', 'access_token', 'code', 'iin',
-        'promocode', 'actived', 'created_at', 'updated_at', 'phone_verified'
+        'city_id',
+        'phone',
+        'password',
+        'name',
+        'surname',
+        'date',
+        'avatar',
+        'access_token',
+        'iin',
+        'promocode',
+        'actived',
+        'created_at',
+        'updated_at',
+        'phone_verified'
     ];
 }

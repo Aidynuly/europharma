@@ -19,7 +19,7 @@ class UserResource extends JsonResource
     {
         return [
             'id'    =>  $id = $this->id,
-            'city'  =>  City::find($this->city_id)->value('name'),
+            'city'  =>  $this->city_id,
             'phone' =>  $this->phone,
             'name'  =>  $this->name,
             'surname'   =>  $this->surname,
@@ -27,7 +27,6 @@ class UserResource extends JsonResource
             'iin'   =>  $this->iin,
             'avatar'    =>  $this->avatar,
             'token' =>  $this->access_token,
-            'code'  =>  $this->code,
             'promocode' =>  $this->promocode,
             'actived'   => (bool)$this->actived,
             'phone_verified'    =>  $this->phone_verified,

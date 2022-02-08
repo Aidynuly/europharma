@@ -24,6 +24,7 @@
                         <th>Surname</th>
                         <th>IIN</th>
                         <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -37,8 +38,13 @@
                             <td>{{$user['iin']}}</td>
                             <td>
                                 <a href="{{route('users.show', $user['id'])}}" class="waves-effect btn btn-primary"><i class="nas fa fa-eye"></i></a>
-                                <a href="" class="waves-effect btn btn-warning"><i class="nas fa fa-edit"></i></a>
-                                <a href="" class="waves-effect btn btn-danger"><i class="nas fa fa-trash-alt"></i></a>
+                            </td>
+                            <td>
+                                <form action="{{ route('users.destroy', $user['id'])}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger" type="submit"><i class="nas fa fa-trash-alt"></i></button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -47,7 +53,7 @@
             </div>
         </div>
         <div class="card-footer clearfix">
-            <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">New user</a>
+            <a href="{{route('users.create')}}" class="btn btn-sm btn-info float-left">Добавить пользователя</a>
         </div>
     </div>
 {{--    {{$users->links()}}--}}

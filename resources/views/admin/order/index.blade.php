@@ -18,11 +18,11 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Employee</th>
-                        <th>From</th>
-                        <th>To</th>
-                        <th>Description</th>
-                        <th>Price</th>
+                        <th>Работадатель</th>
+                        <th>Откуда</th>
+                        <th>Куда</th>
+                        <th>Описание</th>
+                        <th>Цена</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -36,7 +36,7 @@
                             <td>{{$order['description']}}</td>
                             <td>{{$order['price']}}</td>
                             <td>
-                                <a href="" class="waves-effect btn btn-primary"><i class="nas fa fa-eye"></i></a>
+                                <a href="{{route('orders.show', $order['id'])}}" class="waves-effect btn btn-primary"><i class="nas fa fa-eye"></i></a>
                                 <a href="" class="waves-effect btn btn-danger"><i class="nas fa fa-trash-alt"></i></a>
                             </td>
                         </tr>

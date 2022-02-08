@@ -25,7 +25,6 @@ class UserFactory extends Factory
             'iin'   =>  $this->faker->numerify('############'),
             'avatar'    =>  'avatar/' . $this->faker->numerify('######'),
             'access_token'  =>  mb_strtoupper(Str::random(40)),
-            'code'      =>  11111,
             'promocode' =>  mb_strtoupper(Str::random(5)),
             'actived'   =>  true,
             'phone_verified'    =>  Carbon::now(),

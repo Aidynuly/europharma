@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\v1;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CityResource;
@@ -13,6 +13,6 @@ class CityController extends Controller
     {
         $cities = City::all();
 
-        return self::response(200, CityResource::collection($cities), 'Success!');
+        return self::response(200, $cities, 'Success!');
     }
 }

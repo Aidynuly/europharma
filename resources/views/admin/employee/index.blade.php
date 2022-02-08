@@ -23,6 +23,7 @@
                         <th>Name</th>
                         <th>Surname</th>
                         <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -34,9 +35,14 @@
                             <td>{{$employee['name']}}</td>
                             <td>{{$employee['surname']}}</td>
                             <td>
-                                <a href="{{route('users.show', $employee['id'])}}" class="waves-effect btn btn-primary"><i class="nas fa fa-eye"></i></a>
-                                <a href="" class="waves-effect btn btn-warning"><i class="nas fa fa-edit"></i></a>
-                                <a href="" class="waves-effect btn btn-danger"><i class="nas fa fa-trash-alt"></i></a>
+                                <a href="{{route('employees.show', $employee['id'])}}" class="waves-effect btn btn-primary"><i class="nas fa fa-eye"></i></a>
+                            </td>
+                            <td>
+                                <form action="{{ route('employees.destroy', $employee['id'])}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger" type="submit"><i class="nas fa fa-trash-alt"></i></button>
+                                </form>
                             </td>
                         </tr>
                     @endforeach
@@ -45,7 +51,7 @@
             </div>
         </div>
         <div class="card-footer clearfix">
-            <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">New user</a>
+            <a href="{{route('employees.create')}}" class="btn btn-sm btn-info float-left">Добавить работника</a>
         </div>
     </div>
     {{--    {{$users->links()}}--}}

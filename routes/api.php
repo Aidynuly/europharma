@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\v1\CarController;
-use App\Http\Controllers\v1\CityController;
-use App\Http\Controllers\v1\OrderController;
-use App\Http\Controllers\V1\UserController;
+use App\Http\Controllers\Api\V1\CarController;
+use App\Http\Controllers\Api\V1\CityController;
+use App\Http\Controllers\Api\V1\OrderController;
+use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -30,12 +30,13 @@ Route::prefix('v1')->group(function () {
     Route::post('/verify',      [UserController::class, 'verify']);
     Route::post('/logout',      [UserController::class, 'logout']);         //do it
 
-
     Route::get('/cities',       [CityController::class, 'getCity']);
     Route::get('/cars',         [CarController::class, 'getCar']);
 
-    Route::middleware(['check.auth'])->group(function () {
+//    Route::middleware(['check.auth'])->group(function () {
+    Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('profile',       [UserController::class, 'getProfile']);
+
         Route::get('orders/accepted', [OrderController::class, 'acceptedOrders']);
         Route::post('orders',       [OrderController::class, 'getOrder']);      //city_id required
         Route::post('order/accept', [OrderController::class, 'acceptOrder']);

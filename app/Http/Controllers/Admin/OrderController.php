@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderImage;
+use App\Models\OrderStatus;
+use App\Models\Point;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -45,11 +49,21 @@ class OrderController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $orderStatuses = OrderStatus::whereOrderId($id)->get();
+        $images = OrderImage::whereOrderId($id)->get();
+        $points = Point::whereOrderId($id)->get();
+
+        return view('admin.order.show', [
+            'order' =>  $order,
+            'statuses'  =>  $orderStatuses,
+            'images'    =>  $images,
+            'points'    =>  $points,
+        ]);
     }
 
     /**

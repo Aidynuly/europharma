@@ -24,7 +24,6 @@ class CreateUsersTable extends Migration
             $table->string('iin')->nullable();
             $table->string('avatar')->nullable();
             $table->string('access_token')->nullable();
-            $table->integer('code')->nullable();
             $table->string('promocode')->nullable();
             $table->boolean('actived')->default(false);
             $table->dateTime('phone_verified')->nullable();
