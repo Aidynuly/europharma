@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AdminController::class, 'login'])->name('login');
 
-Route::middleware('admin.auth')->group(function () {
+Route::middleware(['admin.auth'])->group(function () {
     Route::post('login', [AuthController::class, 'login'])->name('admin.login');
     Route::post('logout', [AuthController::class, 'logout'])->name('admin.logout');
     Route::get('main', [AdminController::class, 'main'])->name('admin.main');

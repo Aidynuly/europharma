@@ -39,11 +39,16 @@ class UserController extends Controller
         if ($request['code'] == $cache) {
             $user = User::create([
                 'phone' => $request['phone'],
-                'access_token' => mb_strtoupper(Str::random(40)),
+//                'access_token' => mb_strtoupper(Str::random(40)),
                 'phone_verified'    =>  Carbon::now(),
             ]);
+            $token = $user->createToken('auth_token')->plainTextToken;
 
-            return self::response(200, new UserResource($user), 'Success!');
+            return response()->json([
+                'user'  =>  new UserResource($user),
+                'token' =>  $token,
+                'message'   =>  "Success"
+            ],200);
         }
 
         return self::response(400, null, 'Wrong code!');
@@ -51,40 +56,36 @@ class UserController extends Controller
 
     public function registerConfirm(Request $request)
     {
-        if (!$request->bearerToken()) {
-            return self::response(400, null, 'Token!');
-        }
-        $user = User::whereAccessToken($request->bearerToken())
-                ->whereNotNull('phone_verified')
-                ->first();
+        $user = auth()->user();
         if ($user) {
             $user->update([
                 'password' => Hash::make($request['password']),
-                'access_token' => mb_strtoupper(Str::random(40)),
                 'promocode' =>  $request['promocode'] ?? null,
             ]);
 
-            return self::response(200, $user, 'Success!');
+            return self::response(200, new UserResource($user), 'Success!');
         }
+
         return self::response(400, null, 'Token wrong!');
     }
 
     public function loginUser(LoginUserRequest $request)
     {
-        if (Auth::attempt($request->only('phone', 'password'))) {
+        if (!Auth::attempt($request->only('phone', 'password'))) {
             return self::response(400, '', 'неверный телефон номер или пароль');
         }
 
         $user = User::wherePhone($request['phone'])->firstOrFail();
-        if ($request->has('access_token')) {
-            $user->access_token = $request->get('access_token');
+        if ($request->has('device_token')) {
+            $user->device_token = $request->get('device_token');
             $user->save();
         }
-//        if (Hash::check($request['password'], $user['password'])) {
-//            return self::response(200, $user, 'Success!');
-//        }
+        $token = $user->createToken('auth_token')->plainTextToken;
 
-        return self::response(200, new UserResource($user), 'Success!');
+        return response()->json([
+            'access_token'  =>  $token,
+            'user'      =>  new UserResource($user),
+        ]);
     }
 
     public function verify(VerifyUserRequest $request)
@@ -128,7 +129,6 @@ class UserController extends Controller
 
     public function getProfile(Request $request)
     {
-//        $user = $request->get('user');
         $user = auth()->user();
 
         return self::response(200, new UserResource($user), 'Success');
@@ -139,5 +139,12 @@ class UserController extends Controller
         $user = $request->get('user');
 
         return self::response(200, new UserResource($user), 'Success!');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::user()->tokens()->delete();
+
+        return self::response(200, null, 'Successfully logout!');
     }
 }

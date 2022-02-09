@@ -24,7 +24,7 @@ class UserFactory extends Factory
             'date'  =>  Carbon::today()->subDays(random_int(0, 2000)),
             'iin'   =>  $this->faker->numerify('############'),
             'avatar'    =>  'avatar/' . $this->faker->numerify('######'),
-            'access_token'  =>  mb_strtoupper(Str::random(40)),
+            'device_token'  =>  mb_strtoupper(Str::random(40)),
             'promocode' =>  mb_strtoupper(Str::random(5)),
             'actived'   =>  true,
             'phone_verified'    =>  Carbon::now(),

@@ -20,10 +20,12 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('name')->nullable();
             $table->string('surname')->nullable();
+            $table->enum('role', ['user', 'moderator', 'admin'])->default('user');
+            $table->enum('type', ['hired', 'company'])->default('hired');
             $table->dateTime('date')->nullable();
             $table->string('iin')->nullable();
             $table->string('avatar')->nullable();
-            $table->string('access_token')->nullable();
+            $table->string('device_token')->nullable();
             $table->string('promocode')->nullable();
             $table->boolean('actived')->default(false);
             $table->dateTime('phone_verified')->nullable();

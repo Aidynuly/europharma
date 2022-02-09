@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Moderator;
+use App\Models\User;
+use Auth;
 use Hash;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -12,19 +14,15 @@ class AuthController extends Controller
 {
     public function login(Request $request): RedirectResponse
     {
-        $moderator = Moderator::where('login', $request['email'])->first();
-        if ($moderator) {
-            if (Hash::check($request['password'], $moderator['password'])) {
-                session()->put('vK68TF23TfYKYDBZSCC9', 1);
-                session()->put('admin', 1);
-                session()->save();
+        $credentials = $request->only('name', 'password');
 
-                return redirect()->route('admin.main');
-            } else {
-                return back()->withErrors('Пароль неверно');
-            }
+        if (!User::where('name', $request['name'])->where('role', User::ROLE_ADMIN)->exists()) {
+            return redirect()->back()->withErrors(['message' => 'У вас нет доступа!']);
+        } else if (Auth::attempt($credentials)) {
+            return redirect()->route('admin.main');
         }
-        return back()->withErrors('Wrong login!');
+
+        return redirect()->back()->withErrors(['message' => 'Неправильный пароль!']);
     }
 
     public function logout(Request $request): RedirectResponse

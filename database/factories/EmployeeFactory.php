@@ -20,6 +20,7 @@ class EmployeeFactory extends Factory
             'surname'   =>  $this->faker->lastName,
             'token' =>  Str::random(40),
             'phone' =>  $this->faker->phoneNumber,
+            'email' =>  $this->faker->email,
             'password'  =>  '$2y$10$JTKFLbNHCXxl1XpmvaFUZ.hLLXDvPkxGrleTrAPAyY9q6sg.DISnO',
             'created_at'    =>  now(),
             'updated_at'    =>  now(),

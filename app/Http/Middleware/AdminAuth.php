@@ -2,10 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
+use Auth;
 use Closure;
 use Illuminate\Http\Request;
 
-class AdminAuth
+class AdminAuth extends User
 {
     /**
      * Handle an incoming request.
@@ -16,6 +18,12 @@ class AdminAuth
      */
     public function handle(Request $request, Closure $next)
     {
+        if (!empty(Auth::user())) {
+            if (!Auth::user()->isAdmin()) {
+                return redirect()->route('login')->withErrors(['message' => "У вас нет доступа!"]);
+            }
+        }
+
         return $next($request);
     }
 }
