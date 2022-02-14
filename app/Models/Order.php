@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Order
@@ -60,7 +61,27 @@ class Order extends Model
     const STATUS_DECLINED = 'declined';
 
     protected $fillable = [
-        'description', 'from', 'to', 'from_lat', 'from_long', 'to_lat', 'lo_long', 'status', 'employee_id', 'start_date', 'end_date',
-        'payment', 'price', 'from_city_id', 'to_city_id', 'created_at', 'updated_at',
+        'description',
+        'from',
+        'to',
+        'from_lat',
+        'from_long',
+        'to_lat',
+        'to_long',
+        'status',
+        'employee_id',
+        'start_date',
+        'end_date',
+        'payment',
+        'price',
+        'from_city_id',
+        'to_city_id',
+        'created_at',
+        'updated_at',
     ];
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(OrderImage::class);
+    }
 }

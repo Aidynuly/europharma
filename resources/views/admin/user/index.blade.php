@@ -23,6 +23,7 @@
                         <th>Name</th>
                         <th>Surname</th>
                         <th>IIN</th>
+                        <th>Статус</th>
                         <th></th>
                         <th></th>
                     </tr>
@@ -36,6 +37,11 @@
                             <td>{{$user['name']}}</td>
                             <td>{{$user['surname']}}</td>
                             <td>{{$user['iin']}}</td>
+                            @if($user['actived'])
+                                <td>Активирован</td>
+                            @else
+                                <td>В процессе</td>
+                            @endif
                             <td>
                                 <a href="{{route('users.show', $user['id'])}}" class="waves-effect btn btn-primary"><i class="nas fa fa-eye"></i></a>
                             </td>

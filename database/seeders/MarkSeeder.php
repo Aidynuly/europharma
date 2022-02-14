@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Car;
+use App\Models\Mark;
+use App\Models\MarkModel;
+use Database\Factories\MarkModelFactory;
 use Illuminate\Database\Seeder;
 
-class CarSeeder extends Seeder
+class MarkSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,6 +16,6 @@ class CarSeeder extends Seeder
      */
     public function run()
     {
-        Car::factory()->times(20)->create();
+        Mark::factory()->times(5)->create();
     }
 }

@@ -17,8 +17,7 @@ class TransportFactory extends Factory
     public function definition()
     {
         return [
-            'car_id'    =>  random_int(1, 20),
-            'user_id'   =>  random_int(1, 100),
+            'mark_model_id'    =>  random_int(1, 25),
             'car_date'  =>   $date = Carbon::today()->subDays(random_int(365, 11000)),
             'dimensions'    =>  random_int(0.3, 10),
             'number'    =>  mb_strtoupper(Str::random(5)),

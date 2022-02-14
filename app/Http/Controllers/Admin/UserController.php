@@ -141,6 +141,7 @@ class UserController extends Controller
         $user->surname = $request['inputSurname'];
         $user->iin = $request['inputIIN'];
         $user->phone = $request['inputPhone'];
+        $user->actived = $request['inputStatus'];
         $user->save();
 
         return redirect()->route('users.show', $user['id']);

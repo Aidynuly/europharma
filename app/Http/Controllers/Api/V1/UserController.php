@@ -112,7 +112,7 @@ class UserController extends Controller
             ]);
 
             $userTransport = Transport::create([
-                'car_id'        =>  $request['car_id'],
+                'car_id'        =>  $request['mark_model_id'],
                 'user_id'       =>  $user['id'],
                 'car_date'      =>  Carbon::createFromFormat('Y-m-d', $request['car_date']),
                 'dimensions'    =>  $request['dimensions'],
@@ -146,5 +146,12 @@ class UserController extends Controller
         Auth::user()->tokens()->delete();
 
         return self::response(200, null, 'Successfully logout!');
+    }
+
+    public function getAll(Request $request)
+    {
+        $users = User::get();
+
+        return self::response(200, UserResource::collection($users), 'Success');
     }
 }

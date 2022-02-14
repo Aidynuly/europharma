@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\City;
 use App\Models\Order;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,8 +17,10 @@ class OrderFactory extends Factory
     {
         return [
             'description'   =>  $this->faker->text(50),
-            'from'      =>  $this->faker->city,
-            'to'        =>  $this->faker->city,
+            'from_city_id'  =>  $from_city = random_int(1, 20),
+            'to_city_id'    =>  $to_city = random_int(1, 20),
+            'from'      =>  City::whereId($from_city)->value('name'),
+            'to'        =>  City::whereId($to_city)->value('name'),
             'from_lat'  =>  random_int(1, 10000),
             'from_long'  =>  random_int(1, 10000),
             'to_lat'  =>  random_int(1, 10000),
@@ -28,8 +31,6 @@ class OrderFactory extends Factory
             'end_date'      =>  $this->faker->date,
             'payment'       =>  $this->faker->randomElement(['cash', 'card']),
             'price'         =>  random_int(10000, 100000),
-            'from_city_id'  =>  random_int(1, 20),
-            'to_city_id'    =>  random_int(1, 20),
             'created_at'    =>  now(),
             'updated_at'    =>  now(),
         ];

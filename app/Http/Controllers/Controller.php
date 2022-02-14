@@ -30,7 +30,7 @@ class Controller extends BaseController
 
     protected function uploadImage($item)
     {
-        Storage::put('public/images', $item);
+        Storage::disk('public')->put('images', $item);
 
         return 'public/images/' . $item->getClientOriginalName();
     }

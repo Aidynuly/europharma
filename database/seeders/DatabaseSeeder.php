@@ -15,12 +15,13 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(CountrySeeder::class);
         $this->call(CitySeeder::class);
-        $this->call(CarSeeder::class);
+        $this->call(MarkSeeder::class);
+        $this->call(ModelSeeder::class);
         $this->call(UserSeeder::class);         // 100 users
-        $this->call(TransportSeeder::class);
         $this->call(UserDocumentSeeder::class);
         $this->call(EmployeeSeeder::class);     // 10 employee
         $this->call(OrderSeeder::class);        //  50 orders
+        $this->call(TransportSeeder::class);
         $this->call(OrderImageSeeder::class);
         $this->call(PointSeeder::class);        // 250 points
         $this->call(ProductSeeder::class);

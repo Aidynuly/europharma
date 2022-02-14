@@ -27,14 +27,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
     Route::post('/register',    [UserController::class, 'registerUser']);
     Route::post('/register-password', [UserController::class, 'passwordUser']);
-    Route::post('/register-employee', [EmployeeController::class, 'register']);
     Route::post('/login',       [UserController::class, 'loginUser']);
-    Route::post('/login-employee',       [EmployeeController::class, 'login']);
+
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/register-confirm', [UserController::class, 'registerConfirm']);
         Route::post('/verify',      [UserController::class, 'verify']);
         Route::post('/logout',      [UserController::class, 'logout']);
     });
+
     Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('profile',       [UserController::class, 'getProfile']);
         Route::get('orders/accepted', [OrderController::class, 'acceptedOrders']);
@@ -47,7 +47,17 @@ Route::prefix('v1')->group(function () {
         Route::post('order/history', [OrderController::class, 'historyOrder']);
         Route::get('profile/documents', [UserController::class, 'getDocument']);
     });
+
     Route::get('/cities',       [CityController::class, 'getCity']);
     Route::get('/cars',         [CarController::class, 'getCar']);
     Route::get('/positions',    [PositionController::class, 'getPosition']);
+});
+
+Route::prefix('/web')->group(function () {
+    Route::post('/register-employee', [EmployeeController::class, 'register']);
+    Route::post('/login-employee',       [EmployeeController::class, 'login']);
+    Route::get('/active-orders',[OrderController::class, 'getAll']);
+    Route::get('/employers', [UserController::class, 'getAll']);
+    Route::get('/contragents', [EmployeeController::class, 'getAll']);
+    Route::post('/add-transport', [EmployeeController::class, 'addTransport']);
 });

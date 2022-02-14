@@ -89,4 +89,13 @@ class OrderController extends Controller
 
         return self::response(200, OrderStatusResource::collection($orders), 'good');
     }
+
+
+    //Web
+
+    public function getAll(Request $request)
+    {
+        $orders = Order::get();
+        return self::response(200, OrderResource::collection($orders), 'Success!');
+    }
 }

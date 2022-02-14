@@ -2,7 +2,7 @@
 @section('content')
     <div class="card">
         <div class="card-header border-transparent">
-            <h3 class="card-title">All orders</h3>
+            <h3 class="card-title">Все заказы</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
                     <i class="fas fa-minus"></i>
@@ -17,7 +17,7 @@
                 <table class="table m-0">
                     <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>#</th>
                         <th>Работадатель</th>
                         <th>Откуда</th>
                         <th>Куда</th>
@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="card-footer clearfix">
-            <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">New user</a>
+            <a href="{{route('orders.create')}}" class="btn btn-sm btn-info float-left">Новый заказ</a>
         </div>
     </div>
     {{--    {{$users->links()}}--}}

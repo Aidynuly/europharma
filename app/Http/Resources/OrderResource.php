@@ -4,8 +4,10 @@ namespace App\Http\Resources;
 
 use App\Models\City;
 use App\Models\Employee;
+use App\Models\MarkModel;
 use App\Models\OrderImage;
 use App\Models\Point;
+use App\Models\Transport;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class OrderResource extends JsonResource
@@ -35,9 +37,11 @@ class OrderResource extends JsonResource
             'from_city_id'  =>  City::find($this->from_city_id),
             'to_city_id'    =>  City::find($this->to_city_id),
             'created_at'    =>  $this->created_at,
-            'images'        =>  OrderImageResource::collection(OrderImage::whereOrderId($this->id)->get()),
+//            'images'        =>  OrderImageResource::collection(OrderImage::whereOrderId($this->id)->get()),
+            'images'        => $this->images(),
             'points'    =>  $points = OrderPointResource::collection(Point::whereOrderId($this->id)->orderBy('created_at', 'asc')->get()),
             'count_points'  =>  count($points),
+            'transport' =>  new MarkModelResource(MarkModel::find(Transport::where('order_id', $this->id)->value('mark_model_id'))),
         ];
     }
 }

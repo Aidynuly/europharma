@@ -38,7 +38,7 @@ class VerifyUserRequest extends FormRequest
             'image_1'       =>  'required',
             'image_2'       =>  'required',
             'person_image'  =>  'required',
-            'car_id'        =>  'required',
+            'mark_model_id'        =>  'required',
             'car_date'      =>  'required',
             'dimensions'    =>  'required',
             'number'        =>  'required',

@@ -34,7 +34,6 @@ class UserResource extends JsonResource
             'phone_verified'    =>  $this->phone_verified,
             'created_at'    =>  $this->created_at,
             'updated_at'    =>  $this->updated_at,
-            'car'       =>  new TransportResource(Transport::whereUserId($id)->first()),
             'documents' =>  new DocumentResource(UserDocument::whereUserId($id)->first())
         ];
     }

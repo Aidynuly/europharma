@@ -300,6 +300,15 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
+                                            <label for="inputExperience" class="col-sm-2 col-form-label">Статус</label>
+                                            <div class="col-sm-10">
+                                                <select class="custom-select form-control-border" id="exampleSelectBorder" name="inputStatus">
+                                                    <option value="{{false}}">Деактивировать</option>
+                                                    <option value="{{true}}">Активировать</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <div class="offset-sm-2 col-sm-10">
                                                 <button type="submit" class="btn btn-success">Принять</button>
                                             </div>
