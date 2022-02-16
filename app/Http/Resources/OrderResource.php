@@ -6,6 +6,7 @@ use App\Models\City;
 use App\Models\Employee;
 use App\Models\MarkModel;
 use App\Models\OrderImage;
+use App\Models\OrderTransport;
 use App\Models\Point;
 use App\Models\Transport;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -41,7 +42,7 @@ class OrderResource extends JsonResource
             'images'        => $this->images(),
             'points'    =>  $points = OrderPointResource::collection(Point::whereOrderId($this->id)->orderBy('created_at', 'asc')->get()),
             'count_points'  =>  count($points),
-            'transport' =>  new MarkModelResource(MarkModel::find(Transport::where('order_id', $this->id)->value('mark_model_id'))),
+            'transport' =>  new OrderTransportResource(OrderTransport::where('order_id', $this->id)->first()),
         ];
     }
 }

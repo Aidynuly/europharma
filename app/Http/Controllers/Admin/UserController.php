@@ -9,6 +9,7 @@ use App\Models\OrderStatus;
 use App\Models\Transport;
 use App\Models\User;
 use App\Models\UserDocument;
+use App\Models\UserTransport;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -103,7 +104,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $userDocument = UserDocument::whereUserId($id)->first();
-        $userTransport = Transport::whereUserId($id)->first();
+        $userTransport = UserTransport::whereUserId($id)->first();
         $finished = OrderStatus::whereUserId($id)->where('status', OrderStatus::STATUS_ACCEPT)->count();
         $accepted = OrderStatus::whereUserId($id)->where('status', OrderStatus::STATUS_PROCESS)->count();
 

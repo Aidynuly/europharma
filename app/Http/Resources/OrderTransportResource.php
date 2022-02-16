@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Car;
-use App\Models\MarkModel;
+use App\Models\Transport;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TransportResource extends JsonResource
+class OrderTransportResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -18,12 +17,11 @@ class TransportResource extends JsonResource
     {
         return [
             'id'    =>  $this->id,
-            'model'   =>  MarkModel::find($this->mark_model_id),
-            'car_date'  =>  $this->car_date,
-            'dimensions'    =>  $this->dimensions,
-            'number'        =>  $this->number,
-            'registration'  =>  $this->registration,
-            'image' =>  $this->image,
+            'order_id'  =>  $this->order_id,
+            'transport'  =>  new TransportResource(Transport::find($this->transport_id)),
+            'type'  =>  $this->type,
+            'created_at'    =>  $this->created_at,
+            'updated_at'    =>  $this->updated_at,
         ];
     }
 }
