@@ -22,6 +22,7 @@ class TransportFactory extends Factory
             'dimensions'    =>  random_int(0.3, 10),
             'number'    =>  mb_strtoupper(Str::random(5)),
             'image' =>  'img/' . $date,
+            'type'  =>  'company',
             'created_at'    =>  now(),
             'updated_at'    =>  now(),
         ];

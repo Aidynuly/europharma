@@ -11,11 +11,13 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property int $mark_model_id
+ * @property int|null $user_id
  * @property string $car_date
  * @property string|null $dimensions
  * @property string|null $number
  * @property string|null $registration
  * @property string|null $image
+ * @property string $type
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @method static \Database\Factories\TransportFactory factory(...$parameters)
@@ -30,7 +32,9 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Transport whereMarkModelId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transport whereNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transport whereRegistration($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transport whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transport whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Transport whereUserId($value)
  * @mixin \Eloquent
  */
 class Transport extends Model
@@ -39,11 +43,13 @@ class Transport extends Model
 
     protected $fillable = [
         'mark_model_id',
+        'user_id',
         'car_date',
         'dimensions',
         'number',
         'registration',
         'image',
+        'type',
         'created_at',
         'updated_at',
     ];

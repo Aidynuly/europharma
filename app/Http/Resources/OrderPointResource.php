@@ -23,7 +23,7 @@ class OrderPointResource extends JsonResource
             'date'  =>  $this->date,
             'created_at'    =>  $this->created_at,
             'updated_at'    =>  $this->updated_at,
-            'products'  =>  $products = ProductResource::collection(Product::wherePointId($this->id)->get()),
+            'products'  =>  $products = ProductResource::collection(Product::wherePointId($this->id)->where('status', 'in_process')->get()),
             'count_products'    =>  count($products),
         ];
     }

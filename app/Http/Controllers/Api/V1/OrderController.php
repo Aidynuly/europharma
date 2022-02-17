@@ -10,8 +10,10 @@ use App\Http\Resources\OrderResource;
 use App\Http\Resources\OrderStatusResource;
 use App\Models\Order;
 use App\Models\OrderStatus;
+use App\Models\OrderTransport;
 use App\Models\Point;
 use App\Models\Product;
+use App\Models\Transport;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -28,14 +30,20 @@ class OrderController extends Controller
 
     public function acceptOrder(Request $request)
     {
-        $user = $request->get('user');
+        $user = auth()->user();
         $order = Order::find($request['order_id']);
         $order->status = Order::STATUS_ACCEPT;
         $order->save();
+        $transport = Transport::whereUserId($user['id'])->first();
         $orderStatus = OrderStatus::create([
             'order_id'  =>  $order['id'],
             'user_id'   =>  $user['id'],
             'status'    =>  OrderStatus::STATUS_ACCEPT,
+        ]);
+        $orderTransport = OrderTransport::create([
+            'order_id'  =>  $order['id'],
+            'transport_id'  =>  $transport['id'],
+            'type'      =>  'user',
         ]);
 
         return self::response(200, new OrderResource($order), 'Successfully accepted!');
@@ -43,7 +51,7 @@ class OrderController extends Controller
 
     public function acceptedOrders(Request $request)
     {
-        $user = $request->get('user');
+        $user = auth()->user();
         $orders = OrderStatus::whereUserId($user['id'])->get();
         if (count($orders) != 0) {
             return self::response(200, OrderStatusResource::collection($orders), 'Success!');
@@ -55,8 +63,9 @@ class OrderController extends Controller
     public function getPoint(Request $request)
     {
         $order = Order::find($request['order_id']);
+        $points = Point::whereOrderId($order['id'])->orderBy('created_at', 'asc')->get();
 
-        return self::response(200, new OrderResource($order), 'Success!');
+        return self::response(200, OrderPointResource::collection($points), 'Success!');
     }
 
     public function getProduct(Request $request)
@@ -81,7 +90,7 @@ class OrderController extends Controller
 
     public function historyOrder(HistoryOrderRequest $request)
     {
-        $user = $request->get('user');
+        $user = auth()->user();
         $orders = OrderStatus::whereUserId($user['id'])->get();
         if (isset($request['start_date']) && isset($request['end_date'])) {
             $orders->where('created_at', '<', $request['start_date'])->where('created_at', '>', $request['end_date']);
@@ -96,6 +105,7 @@ class OrderController extends Controller
     public function getAll(Request $request)
     {
         $orders = Order::get();
+
         return self::response(200, OrderResource::collection($orders), 'Success!');
     }
 }

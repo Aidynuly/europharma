@@ -8,7 +8,6 @@ use App\Http\Requests\PasswordUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\VerifyUserRequest;
 use App\Http\Resources\UserResource;
-use App\Models\Car;
 use App\Models\Transport;
 use App\Models\User;
 use App\Models\UserDocument;
@@ -36,22 +35,21 @@ class UserController extends Controller
             return self::response(400, '', 'неверный номер');
         }
         $cache = Cache::get($request->get('phone'));
-        if ($request['code'] == $cache) {
+        if ($request['code'] == $cache && User::wherePhone($request['phone'])->doesntExist()) {
             $user = User::create([
                 'phone' => $request['phone'],
-//                'access_token' => mb_strtoupper(Str::random(40)),
-                'phone_verified'    =>  Carbon::now(),
+                'phone_verified' => Carbon::now(),
             ]);
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
-                'user'  =>  new UserResource($user),
-                'token' =>  $token,
-                'message'   =>  "Success"
-            ],200);
+                'token' => $token,
+                'user' => new UserResource($user),
+                'message' => "Success"
+            ], 200);
         }
 
-        return self::response(400, null, 'Wrong code!');
+        return self::response(400, null, 'Already exist!');
     }
 
     public function registerConfirm(Request $request)
@@ -60,7 +58,7 @@ class UserController extends Controller
         if ($user) {
             $user->update([
                 'password' => Hash::make($request['password']),
-                'promocode' =>  $request['promocode'] ?? null,
+                'promocode' => $request['promocode'] ?? null,
             ]);
 
             return self::response(200, new UserResource($user), 'Success!');
@@ -83,8 +81,8 @@ class UserController extends Controller
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'access_token'  =>  $token,
-            'user'      =>  new UserResource($user),
+            'access_token' => $token,
+            'user' => new UserResource($user),
         ]);
     }
 
@@ -93,38 +91,41 @@ class UserController extends Controller
         if (!$request->bearerToken()) {
             return self::response(400, null, 'Token!');
         }
-        $user = User::whereAccessToken($request->bearerToken())->first();
-        if ($user) {
+        $user = auth()->user();
+        if ($user && UserDocument::whereUserId($user['id'])->doesntExist()
+            && Transport::whereUserId($user['id'])->doesntExist()) {
+
             $user->update([
-                'name'      =>  $request['name'],
-                'surname'   =>  $request['surname'],
-                'date'      =>  $request['date'],
-                'iin'       =>  $request['iin'],
+                'name' => $request['name'],
+                'surname' => $request['surname'],
+                'date' => $request['date'],
+                'iin' => $request['iin'],
             ]);
 
             $userDocument = UserDocument::create([
-                'user_id'       =>  $user['id'],
-                'doc_number'    =>  $request['doc_number'],
-                'deadline'      =>  Carbon::createFromFormat('Y-m-d', $request['deadline']),
-                'image_1'       =>  $this->uploadImage($request['image_1']),
-                'image_2'       =>   $this->uploadImage($request['image_2']),
-                'person_image'  =>   $this->uploadImage($request['person_image']),
+                'user_id' => $user['id'],
+                'doc_number' => $request['doc_number'],
+                'deadline' => Carbon::createFromFormat('Y-m-d', $request['deadline']),
+                'image_1' => $this->uploadImage($request['image_1']),
+                'image_2' => $this->uploadImage($request['image_2']),
+                'person_image' => $this->uploadImage($request['person_image']),
             ]);
 
             $userTransport = Transport::create([
-                'car_id'        =>  $request['mark_model_id'],
-                'user_id'       =>  $user['id'],
-                'car_date'      =>  Carbon::createFromFormat('Y-m-d', $request['car_date']),
-                'dimensions'    =>  $request['dimensions'],
-                'number'        =>  $request['number'],
-                'registration'  =>  $request['registration'],
-                'image'         =>  $this->uploadImage($request['image'])
-            ]) ;
+                'mark_model_id' => $request['mark_model_id'],
+                'user_id' => $user['id'],
+                'car_date' => Carbon::createFromFormat('Y-m-d', $request['car_date']),
+                'dimensions' => $request['dimensions'],
+                'number' => $request['number'],
+                'registration' => $request['registration'],
+                'image' => $this->uploadImage($request['image']),
+                'type' => 'user',
+            ]);
 
             return self::response(200, new UserResource($user), 'Success!');
         }
 
-        return self::response(400, null, 'User not found!');
+        return self::response(400, null, 'User already passed verify!');
     }
 
     public function getProfile(Request $request)

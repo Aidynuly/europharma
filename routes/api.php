@@ -51,6 +51,7 @@ Route::prefix('v1')->group(function () {
     Route::get('/cities',       [CityController::class, 'getCity']);
     Route::get('/cars',         [CarController::class, 'getCar']);
     Route::get('/positions',    [PositionController::class, 'getPosition']);
+    Route::get('/marks',        [CarController::class, 'getModel']);
 });
 
 Route::prefix('/web')->group(function () {

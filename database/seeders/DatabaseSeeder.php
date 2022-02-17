@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(OrderImageSeeder::class);
         $this->call(PointSeeder::class);        // 250 points
         $this->call(ProductSeeder::class);
-        $this->call(OrderStatusSeeder::class);
+//        $this->call(OrderStatusSeeder::class);
         $this->call(ScheduleSeeder::class);
         $this->call(UserScheduleSeeder::class);
         $this->call(PositionSeeder::class);

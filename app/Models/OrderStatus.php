@@ -35,6 +35,10 @@ class OrderStatus extends Model
     const STATUS_DECLINED = 'declined';
 
     protected $fillable = [
-        'order_id', 'user_id', 'status', 'created_at', 'updated_at',
+        'order_id',
+        'user_id',
+        'status',
+        'created_at',
+        'updated_at',
     ];
 }

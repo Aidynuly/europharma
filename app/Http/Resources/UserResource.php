@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use App\Models\City;
 use App\Models\Transport;
 use App\Models\UserDocument;
+use App\Models\UserTransport;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
@@ -34,7 +35,8 @@ class UserResource extends JsonResource
             'phone_verified'    =>  $this->phone_verified,
             'created_at'    =>  $this->created_at,
             'updated_at'    =>  $this->updated_at,
-            'documents' =>  new DocumentResource(UserDocument::whereUserId($id)->first())
+            'documents' =>  new DocumentResource(UserDocument::whereUserId($id)->first()),
+            'transport' =>  new TransportResource(Transport::where('user_id', $id)->first()),
         ];
     }
 }
